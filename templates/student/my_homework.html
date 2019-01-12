@@ -1,0 +1,38 @@
+{% extends 'kingadmin/index.html' %}
+
+{% block right-content-container %}
+    <div style="width: 100%;min-height:600px;background-color: ghostwhite">
+    <ol class="breadcrumb">
+        <li>HOME</li>
+        <li>STUDENT</li>
+        <li class="active">作业管理</li>
+    </ol>
+    <h2 class="page-header">作业管理</h2>
+    <h6 class="page-header">我的课程({{ class_obj }})作业和成绩列表</h6>
+    <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>节次</th>
+                <th>本节讲师</th>
+                <th>上课记录</th>
+                <th>本节成绩</th>
+                <th>作业内容</th>
+                <th>交作业</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in study_record %}
+                <tr>
+                    <td>{{ record.course_record.date }}</td>
+                    <td>{{ record.course_record.day_num }}</td>
+                    <td>{{ record.course_record.teacher }}</td>
+                    <td>{{ record.get_show_status_display }}</td>
+                    <td>{{ record.get_score_display }}</td>
+                    <td>{{ record.course_record.homework }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

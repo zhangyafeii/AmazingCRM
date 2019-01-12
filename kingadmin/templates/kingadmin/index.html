@@ -1,0 +1,89 @@
+{% extends 'kingadmin/base.html' %}
+
+{% block body %}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://v3.bootcss.com/examples/dashboard/#">{% block app_name %}Perfect
+                CRM{% endblock %}</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="item" href="#">消息<i style="margin-left: 3px;" class="fa fa-bell-o"
+                                                  aria-hidden="true"></i>&nbsp;<span class="badge"
+                                                                                     style="background-color: red">4</span></a>
+                </li>
+                <li><a class="item" href="#">通知<i style="margin-left: 3px;" class="fa fa-envelope-o"
+                                                  aria-hidden="true"></i>&nbsp;<span class="badge"
+                                                                                     style="background-color:forestgreen">4</span></a>
+                </li>
+                <li><a class="item" href="#">任务<i style="margin-left: 3px;" class="fa fa-commenting-o"
+                                                  aria-hidden="true"></i>&nbsp;<span class="badge"
+                                                                                     style="background-color: forestgreen">4</span></a>
+                </li>
+                <li><a href="https://v3.bootcss.com/examples/dashboard/#"></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button">{{ request.user.name }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'kingadmin:update_password' %}">修改密码</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                {% for role in request.user.role.select_related %}
+                {% for menu in role.menus.select_related %}
+                {% if menu.url_type == 1 %}
+                    <span style="display: none">{% url menu.url_name as url_name%}</span>
+                        {% if request.path == url_name %}
+                        <li class="active">
+                            <a href="
+                                    {% if menu.url_type == 0 %}{{ menu.url_name }}{% else %}{% url menu.url_name %}{% endif %}">{{ menu.name }}</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="
+                                    {% if menu.url_type == 0 %}{{ menu.url_name }}{% else %}{% url menu.url_name %}{% endif %}">{{ menu.name }}</a>
+                        </li>
+                            {% endif %}
+                    {% elif request.path == menu.url_name %}
+                        <li class="active">
+                            <a href="
+                                    {% if menu.url_type == 0 %}{{ menu.url_name }}{% else %}{% url menu.url_name %}{% endif %}">{{ menu.name }}</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="
+                                    {% if menu.url_type == 0 %}{{ menu.url_name }}{% else %}{% url menu.url_name %}{% endif %}">{{ menu.name }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {% block right-content-container %}
+                <h2 class="page-header">Kingadmin</h2>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

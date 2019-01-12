@@ -1,0 +1,38 @@
+{% extends 'index.html' %}
+
+{% block right-content-container %}
+    <div style="width: 100%;min-height:600px;background-color: ghostwhite">
+    <ol class="breadcrumb">
+        <li>HOME</li>
+        <li>TEACHER</li>
+        <li class="active">我的班级</li>
+    </ol>
+    <h2 class="page-header">我的班级</h2>
+    <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>班级(学期)</th>
+                <th>类型</th>
+                <th>开课时间</th>
+                <th>开课总节次</th>
+                <th>已上节次</th>
+                <th>学员数量</th>
+                <th>上课记录</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cls in class_list %}
+                <tr>
+                    <td>{{ cls }}</td>
+                    <td>{{ cls.get_class_type_display }}</td>
+                    <td>{{ cls.start_date }}</td>
+                    <td>{{ cls.day_nums }}</td>
+                    <td>{{ cls.courserecord_set.count }}</td>
+                    <td>{{ cls.student_set.count }}</td>
+                    <td><a href="">上课记录</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'kingadmin/index.html' %}
+
+{% block right-content-container %}
+    <ol class="breadcrumb">
+        <li>HOME</li>
+        <li>STUDENT</li>
+        <li class="active">我的课程</li>
+    </ol>
+    <h2 class="page-header">我的课程</h2>
+    <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>课程</th>
+                <th>课程类型</th>
+                <th>开课日期</th>
+                <th>开课总节次</th>
+                <th>成绩</th>
+                <th>排名</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ class_obj.course }}</td>
+                    <td>{{ class_obj.get_class_type_display }}</td>
+                    <td>{{ class_obj.start_date }}</td>
+                    <td>104</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+{% endblock %}
